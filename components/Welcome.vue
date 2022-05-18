@@ -13,7 +13,7 @@
         :key="movie.title"
         :src="movie.cover_url"
         :alt="movie.title + ' cover'"
-        class="md:h-64 h-40 md:w-4/5 m-10"
+        class="md:h-64 h-40 md:w-4/5 m-10 animate-fade-in"
       />
       <img
         @mouseenter="upBannerHover = true"
@@ -22,16 +22,19 @@
         :key="movie.title"
         :src="movie.cover_url"
         :alt="movie.title + ' cover'"
-        class="md:h-64 h-40 md:w-4/5 m-10"
+        class="md:h-64 h-40 md:w-4/5 m-10 animate-fade-in"
       />
     </div>
 
     <div class="flex flex-2 flex-row">
-      <h1
-        class="font-bold text-white md:text-3xl text-xl md:p-5 p-2 m-2 border-2 cursor-pointer"
+      <a
+        @mouseenter="buttonHover = true"
+        @mouseleave="buttonHover = false"
+        class="font-bold text-white md:w-[3rem] md:text-3xl text-xl md:p-5 p-2 m-2 border-2 cursor-pointer smooth-scroll"
+        href="#timeline"
       >
-        Welcome to MCU Explorer
-      </h1>
+        {{ buttonHover ? 'Welcome to MCU Explorer' : 'Explore the MCU'}}
+      </a>
     </div>
     <div
       class="flex flex-1 justify-center items-center animate-infinite-scroll-inverted"
@@ -44,7 +47,7 @@
         :key="movie.title"
         :src="movie.cover_url"
         :alt="movie.title + ' cover'"
-        class="md:h-64 h-40 md:w-4/5 m-10 cursor-pointer"
+        class="md:h-64 h-40 md:w-4/5 m-10 cursor-pointer animate-fade-in"
       />
       <img
         @mouseenter="downBannerHover = true"
@@ -53,7 +56,7 @@
         :key="movie.title"
         :src="movie.cover_url"
         :alt="movie.title + ' cover'"
-        class="md:h-64 h-40 md:w-4/5 m-10 cursor-pointer"
+        class="md:h-64 h-40 md:w-4/5 m-10 cursor-pointer animate-fade-in"
       />
     </div>
     <!-- <img v-for="movie in movies" :key="movie.title" :src="movie.cover_url" :alt="movie.title + ' cover'" class="h-20"> -->
@@ -71,6 +74,7 @@ export default {
   data() {
     return {
       movies: [],
+      buttonHover: false,
       upBannerHover: false,
       downBannerHover: false,
     }

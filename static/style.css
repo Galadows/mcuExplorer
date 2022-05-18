@@ -9,6 +9,9 @@
   .blur {
     filter: blur(2px);
   }
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -33,4 +36,9 @@ body {
   overflow-y: scroll;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scroll-behavior: smooth;
+}
+
+html{
+  scroll-behavior: smooth;
 }
