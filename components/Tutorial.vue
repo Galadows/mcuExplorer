@@ -116,7 +116,18 @@
 </template>
 
 <script>
+import marvelAPI from '../api/marvelAPI'
+
 export default {
+  mounted() {
+    this.getMovies(null, 'title,cover_url');
+  },
   name: 'NuxtTutorial',
+  methods:{
+    async getMovies(){
+      let movies = await marvelAPI.getMovies()
+      console.log(movies);
+    }
+  }
 }
 </script>
