@@ -6,58 +6,83 @@
       class="flex flex-1 justify-center items-center animate-infinite-scroll"
       :class="{ pause: upBannerHover }"
     >
-      <img
-        @mouseenter="upBannerHover = true"
-        @mouseleave="upBannerHover = false"
-        v-for="movie in covers"
-        :key="movie.title"
-        :src="movie.cover_url"
-        :alt="movie.title + ' cover'"
-        class="md:h-64 h-40 md:w-4/5 m-10 animate-fade-in"
-      />
-      <img
-        @mouseenter="upBannerHover = true"
-        @mouseleave="upBannerHover = false"
-        v-for="movie in covers"
-        :key="movie.title"
-        :src="movie.cover_url"
-        :alt="movie.title + ' cover'"
-        class="md:h-64 h-40 md:w-4/5 m-10 animate-fade-in"
-      />
+      <a
+
+        v-for="movie in movies"
+        :key="movie.title + 1"
+
+        @click="selectOnTimelineEmiter(movie.id)"
+        class="w-[172.77px] h-[256px] m-10 animate-fade-in"
+      >
+        <img
+          @mouseenter="upBannerHover = true"
+          @mouseleave="upBannerHover = false"
+          :src="movie.cover_url"
+          :alt="movie.title + ' cover'"
+          class="h-full md:w-full rounded-sm animate-unblur hover:animate-blur cursor-pointer"
+        />
+      </a>
+      <a
+        v-for="movie in movies"
+        :key="movie.title + 2"
+
+        @click="selectOnTimelineEmiter(movie.id)"
+        class="w-[172.77px] h-[256px] m-10 animate-fade-in"
+      >
+        <img
+          @mouseenter="upBannerHover = true"
+          @mouseleave="upBannerHover = false"
+          :src="movie.cover_url"
+          :alt="movie.title + ' cover'"
+          class="h-full md:w-full rounded-sm animate-unblur hover:animate-blur cursor-pointer"
+        />
+      </a>
     </div>
 
     <div class="flex flex-2 flex-row">
       <a
         @mouseenter="buttonHover = true"
         @mouseleave="buttonHover = false"
-        class="font-bold text-white md:w-[3rem] md:text-3xl text-xl md:p-5 p-2 m-2 border-2 cursor-pointer smooth-scroll"
+        class="font-bold text-white md:w-[450px] text-center md:text-3xl text-xl md:p-5 p-2 m-2 border-2 cursor-pointer"
         href="#timeline"
       >
-        {{ buttonHover ? 'Welcome to MCU Explorer' : 'Explore the MCU'}}
+        {{ buttonHover ? 'Explore the MCU' : 'Welcome to MCU Explorer' }}
       </a>
     </div>
     <div
       class="flex flex-1 justify-center items-center animate-infinite-scroll-inverted"
       :class="{ pause: downBannerHover }"
     >
-      <img
-        @mouseenter="downBannerHover = true"
-        @mouseleave="downBannerHover = false"
-        v-for="movie in covers"
-        :key="movie.title"
-        :src="movie.cover_url"
-        :alt="movie.title + ' cover'"
-        class="md:h-64 h-40 md:w-4/5 m-10 cursor-pointer animate-fade-in"
-      />
-      <img
-        @mouseenter="downBannerHover = true"
-        @mouseleave="downBannerHover = false"
-        v-for="movie in covers"
-        :key="movie.title"
-        :src="movie.cover_url"
-        :alt="movie.title + ' cover'"
-        class="md:h-64 h-40 md:w-4/5 m-10 cursor-pointer animate-fade-in"
-      />
+      <a
+        v-for="movie in movies"
+        :key="movie.title + 3"
+
+        @click="selectOnTimelineEmiter(movie.id)"
+        class="w-[172.77px] h-[256px] m-10 animate-fade-in"
+      >
+        <img
+          @mouseenter="downBannerHover = true"
+          @mouseleave="downBannerHover = false"
+          :src="movie.cover_url"
+          :alt="movie.title + ' cover'"
+          class="h-full md:w-full rounded-sm animate-unblur hover:animate-blur cursor-pointer"
+        />
+      </a>
+      <a
+        v-for="movie in movies"
+        :key="movie.title + 4"
+
+        @click="selectOnTimelineEmiter(movie.id)"
+        class="w-[172.77px] h-[256px] m-10 animate-fade-in"
+      >
+        <img
+          @mouseenter="downBannerHover = true"
+          @mouseleave="downBannerHover = false"
+          :src="movie.cover_url"
+          :alt="movie.title + ' cover'"
+          class="h-full md:w-full rounded-sm animate-unblur hover:animate-blur cursor-pointer"
+        />
+      </a>
     </div>
     <!-- <img v-for="movie in movies" :key="movie.title" :src="movie.cover_url" :alt="movie.title + ' cover'" class="h-20"> -->
   </div>
@@ -68,28 +93,22 @@ import marvelAPI from '../api/marvelAPI'
 
 export default {
   name: 'Welcome',
-  async mounted() {
-    this.movies = await marvelAPI.getMovies(null, 'title,cover_url')
-  },
+  async mounted() {},
+  props: ['movies'],
   data() {
     return {
-      movies: [],
       buttonHover: false,
       upBannerHover: false,
       downBannerHover: false,
     }
   },
-  methods: {},
+  methods: {
+    selectOnTimelineEmiter(id){
+      this.$emit('selectOnTimeline', id)
+      document.getElementById(id).scrollIntoView({inline: 'center'});
+    }
+  },
   computed: {
-    covers() {
-      let moviesWithCovers = []
-      this.movies.forEach((movie) => {
-        if (movie.cover_url) {
-          moviesWithCovers.push(movie)
-        }
-      })
-      return moviesWithCovers
-    },
   },
 }
 </script>
