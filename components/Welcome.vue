@@ -7,16 +7,33 @@
       :class="{ pause: upBannerHover }"
     >
       <a
-
         v-for="movie in movies"
         :key="movie.title + 1"
-
+        @mouseenter="
+          () => {
+            upBannerHover = true
+            isHovered = 'upBanner-' + movie.id
+          }
+        "
+        @mouseleave="
+          () => {
+            upBannerHover = false
+            isHovered = ''
+          }
+        "
         @click="selectOnTimelineEmiter(movie.id)"
         class="w-[172.77px] h-[256px] m-10 animate-fade-in"
       >
+        <h1
+          class="absolute w-[172.77px] h-[256px] text flex justify-center items-center text-center z-10 text-white font-bold pointer-events-none px-2"
+          :class="{
+            'animate-fade-in-fast': isHovered == 'upBanner-' + movie.id,
+            hidden: isHovered != 'upBanner-' + movie.id,
+          }"
+        >
+          {{ movie.title }}
+        </h1>
         <img
-          @mouseenter="upBannerHover = true"
-          @mouseleave="upBannerHover = false"
           :src="movie.cover_url"
           :alt="movie.title + ' cover'"
           class="h-full md:w-full rounded-sm animate-unblur hover:animate-blur cursor-pointer"
@@ -25,7 +42,6 @@
       <a
         v-for="movie in movies"
         :key="movie.title + 2"
-
         @click="selectOnTimelineEmiter(movie.id)"
         class="w-[172.77px] h-[256px] m-10 animate-fade-in"
       >
@@ -56,7 +72,6 @@
       <a
         v-for="movie in movies"
         :key="movie.title + 3"
-
         @click="selectOnTimelineEmiter(movie.id)"
         class="w-[172.77px] h-[256px] m-10 animate-fade-in"
       >
@@ -71,7 +86,6 @@
       <a
         v-for="movie in movies"
         :key="movie.title + 4"
-
         @click="selectOnTimelineEmiter(movie.id)"
         class="w-[172.77px] h-[256px] m-10 animate-fade-in"
       >
@@ -100,15 +114,15 @@ export default {
       buttonHover: false,
       upBannerHover: false,
       downBannerHover: false,
+      isHovered: '',
     }
   },
   methods: {
-    selectOnTimelineEmiter(id){
+    selectOnTimelineEmiter(id) {
       this.$emit('selectOnTimeline', id)
-      document.getElementById(id).scrollIntoView({inline: 'center'});
-    }
+      document.getElementById(id).scrollIntoView({ inline: 'center' })
+    },
   },
-  computed: {
-  },
+  computed: {},
 }
 </script>

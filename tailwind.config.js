@@ -12,6 +12,7 @@ module.exports = {
         blur: 'blurred linear 0.2s 1 normal forwards',
         unblur: 'unblurred 0.2s forwards',
         'fade-in': 'fadeIn 2s ease-in-out',
+        'fade-in-fast': 'fadeIn 0.2s ease-in-out',
       },
       keyframes: {
         infiniteScroll: {
@@ -23,12 +24,12 @@ module.exports = {
           '100%': { transform: 'translateX(25)' },
         },
         blurred: {
-          '0%': { filter: 'blur(0)' },
-          '100%': { filter: 'blur(2px)' },
+          '0%': { filter: 'blur(0) brightness(100%)' },
+          '100%': { filter: 'blur(2px) brightness(50%)' },
         },
         unblurred: {
-          '0%': { filter: 'blur(2)' },
-          '100%': { filter: 'blur(0px)' },
+          '0%': { filter: 'blur(2px) brightness(50%)' },
+          '100%': { filter: 'blur(0px) brightness(100%)' },
         },
         fadeIn: {
           '0%': { opacity: '0' },
