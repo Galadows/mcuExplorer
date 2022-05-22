@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex border-white border-4 flex-col justify-center items-center h-screen w-screen bg-marvel-red overflow-hidden"
+    class="flex flex-col justify-center items-center h-screen w-screen bg-marvel-red overflow-hidden"
   >
     <scrolling-banner
       :images="movies"

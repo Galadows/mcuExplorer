@@ -1,7 +1,14 @@
 <template>
   <div class="m-0 p-0 max-w-screen overflow-hidden scrollbar-hidden">
-    <Welcome @selectOnTimeline="id => selectOnTimeline(id)" :movies="covers" />
-    <Timeline @unselect="selected = null" :movies="covers" :selected="selected" />
+    <Welcome
+      @selectOnTimeline="(id) => selectOnTimeline(id)"
+      :movies="covers"
+    />
+    <Timeline
+      @unselect="selected = null"
+      :movies="covers"
+      :selected="selected"
+    />
   </div>
 </template>
 
@@ -15,8 +22,11 @@ export default {
   async mounted() {
     this.movies = await marvelAPI.getMovies(
       null,
+      'release_date, ASC',
       'title,release_date,cover_url,id'
     )
+
+    this.params
   },
   data() {
     return {
@@ -28,7 +38,7 @@ export default {
   },
   methods: {
     selectOnTimeline(id) {
-      this.selected = id;
+      this.selected = id
     },
   },
   computed: {

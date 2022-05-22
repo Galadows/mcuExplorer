@@ -38,7 +38,7 @@
         <img
           :src="image.cover_url"
           :alt="image.title + ' cover'"
-          class="h-full md:w-full rounded-sm animate-unblur hover:animate-blur cursor-pointer"
+          class="h-full border border-white md:w-full rounded-sm animate-unblur hover:animate-blur cursor-pointer"
         />
       </a>
     </template>

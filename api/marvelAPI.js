@@ -3,6 +3,7 @@ const axios = require('axios').default
 class marvelAPI {
   static async getMovies(
     filter,
+    order,
     properties = 'title,release_date,phase',
     page,
     limit
@@ -11,11 +12,11 @@ class marvelAPI {
       page: page,
       limit: limit,
       columns: properties,
-      order: 'chronology,ASC',
+      order: order || 'chronology,ASC',
       filter: filter,
     }
 
-    let data;
+    let data
 
     await axios
       .get('https://mcuapi.herokuapp.com/api/v1/movies', {
@@ -24,7 +25,7 @@ class marvelAPI {
       .then(function (response) {
         // handle success
         console.log(response)
-        return data = response.data.data;
+        return (data = response.data.data)
       })
       .catch(function (error) {
         // handle error
@@ -34,7 +35,27 @@ class marvelAPI {
         // always executed
       })
 
-      return data
+    return data
+  }
+
+  static async getMovie(id) {
+    let data
+    await axios
+      .get('https://mcuapi.herokuapp.com/api/v1/movies/' + id)
+      .then(function (response) {
+        // handle success
+        console.log(response)
+        return (data = response.data)
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error)
+      })
+      .then(function () {
+        // always executed
+      })
+
+    return data
   }
 }
 
