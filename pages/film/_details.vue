@@ -1,14 +1,92 @@
 <template>
-  <div class="h-screen w-screen bg-black">
-    <div class="flex flex-col items-center h-screen md:w-96 bg-marvel-red">
-      <div class="flex-1">
+  <div class="flex lg:flex-row flex-col md:h-screen w-screen bg-black">
+    <div
+      class="flex flex-col items-center lg:w-96 w-screen min-h-fit bg-marvel-red text-white"
+    >
+      <div class="flex flex-col flex-1 text-center font-bold">
         <img
+          v-if="movie.cover_url"
           :src="movie.cover_url"
           :alt="movie.title + ' cover'"
-          class="p-5 border border-marvel-red"
+          class="p-5 max-w-full"
         />
+        <div v-else class="bg-black m-5 w-[14rem] h-[20rem] flex justify-center items-center"> No cover yet</div>
+        <div v-if="movie.trailer_url">
+          <h1>Directed by: {{ movie.directed_by }}</h1>
+          <h1>Release date: {{ movie.release_date }}</h1>
+          <h1>Duration: {{ movie.duration }} minutes</h1>
+          <h1>Saga: {{ movie.saga }}</h1>
+          <h1>Phase: {{ movie.phase }}</h1>
+          <h1>Box office: {{ movie.box_office }} Millions USD</h1>
+        </div>
+        <div v-else>
+          <h1>Not enough infos yet</h1>
+        </div>
       </div>
-      <NuxtLink :to="'/#' + movie.id" class="text-white font-semibold italic self-start ml-2 mb-2">Go Back</NuxtLink>
+
+      <div class="flex relative w-full h-10 p-2 m-5 mb-0 text-white">
+        <NuxtLink
+          v-if="previousMovie"
+          class="font-extrabold italicml-2 mb-2 absolute left-[5%]"
+          :to="{
+            path: previousMovie.title.replaceAll(' ', '_'),
+            query: { id: previousMovie.id },
+          }"
+          >Previous movie</NuxtLink
+        >
+        <NuxtLink
+          to="/#timeline"
+          class="font-extrabold italicml-2 mb-2 absolute left-1/2 right-1/2"
+          >Home</NuxtLink
+        >
+        <NuxtLink
+          v-if="nextMovie"
+          class="font-extrabold italicml-2 mb-2 absolute right-[5%]"
+          :to="{
+            path: nextMovie.title.replaceAll(' ', '_'),
+            query: { id: nextMovie.id },
+          }"
+          >Next movie</NuxtLink
+        >
+      </div>
+    </div>
+    <div class="flex flex-1 2xl:flex-row flex-col h-full p-10 text-white">
+      <div>
+        <h1 class="text-3xl mb-10 font-extrabold">{{ movie.title }}</h1>
+        <div class="lg:w-3/4" v-if="movie.overview">
+          <h2>Overview:</h2>
+          <p>{{ movie.overview }}</p>
+        </div>
+      </div>
+      <div class="w-full">
+        <div
+          class="lg:w-[560px] lg:h-[315px] 2xl:m-0 mt-10 w-full"
+          v-if="movie.trailer_url"
+        >
+          <iframe
+            v-if="movie.trailer_url.includes('youtu')"
+            class="aspect-video w-full"
+            :src="
+              'https://www.youtube.com/embed/' +
+              movie.trailer_url.substr(movie.trailer_url.lastIndexOf('/') + 1)
+            "
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+          <iframe
+            v-else
+            class="aspect-video w-full"
+            :src="movie.trailer_url"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+      <div></div>
     </div>
   </div>
 </template>
@@ -23,11 +101,31 @@ export default {
     const movie = await marvelAPI.getMovie(query.id)
     return { movie }
   },
-
+  mounted() {
+    if (this.$store.state.store.movieList.length == 0) {
+      console.log('Details')
+      this.$store.dispatch('store/getMovieList')
+    }
+  },
   data() {
     return {
       movie: null,
     }
+  },
+  methods: {
+    goToPrev() {
+      this.$router.go(-1)
+    },
+  },
+  computed: {
+    nextMovie() {
+      console.log(this.$store.state)
+      return this.$store.state.store.movieList[this.movie.id]
+    },
+    previousMovie() {
+      console.log(this.$store.state)
+      return this.$store.state.store.movieList[this.movie.id - 2]
+    },
   },
 }
 </script>

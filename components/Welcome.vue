@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col justify-center items-center h-screen w-screen bg-marvel-red overflow-hidden"
+    class="flex flex-col justify-center items-center h-screen w-screen bg-marvel-red overflow-hidden min-h-[700px]"
   >
     <scrolling-banner
       :images="movies"
@@ -31,7 +31,6 @@ import ScrollingBanner from './subcomponents/ScrollingBanner.vue'
 export default {
   components: { ScrollingBanner },
   name: 'Welcome',
-  async mounted() {},
   props: ['movies'],
   data() {
     return {

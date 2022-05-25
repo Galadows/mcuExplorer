@@ -20,13 +20,17 @@ export default {
   components: { Timeline },
   name: 'IndexPage',
   async mounted() {
-    this.movies = await marvelAPI.getMovies(
-      null,
-      'release_date, ASC',
-      'title,release_date,cover_url,id'
-    )
-
-    this.params
+    if (this.$store.state.store.movieList.length == 0) {
+      let response = await marvelAPI.getMovies(
+        null,
+        'release_date, ASC',
+        'title,release_date,cover_url,id,chronology'
+      )
+      this.movies = response
+      this.$store.commit('store/setMovieList', response)
+    }else {
+      this.movies = this.$store.state.store.movieList;
+    }
   },
   data() {
     return {
