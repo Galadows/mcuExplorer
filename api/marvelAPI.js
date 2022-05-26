@@ -24,12 +24,10 @@ class marvelAPI {
       })
       .then(function (response) {
         // handle success
-        console.log(response)
         return (data = response.data.data)
       })
       .catch(function (error) {
         // handle error
-        console.log(error)
       })
       .then(function () {
         // always executed
@@ -44,7 +42,6 @@ class marvelAPI {
       .get('https://mcuapi.herokuapp.com/api/v1/movies/' + id)
       .then(function (response) {
         // handle success
-        console.log(response)
         return (data = response.data)
       })
       .catch(function (error) {

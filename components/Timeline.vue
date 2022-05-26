@@ -210,7 +210,6 @@ export default {
   computed: {
     filteredMovies() {
       let newMovieList = this.phaseFilter(this.searchFilter(this.movies))
-      console.log(newMovieList)
       return newMovieList
     },
   },

@@ -12,13 +12,11 @@ export const mutations = {
 
 export const actions = {
   async getMovieList(context) {
-    console.log("Context: ", context);
     let response = await marvelAPI.getMovies(
       null,
       'release_date, ASC',
       'title,phase,release_date,cover_url,id,chronology'
     )
-    console.log("Response: ", response);
     context.commit('setMovieList', response)
   },
 }

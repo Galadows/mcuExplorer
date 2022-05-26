@@ -105,13 +105,11 @@ import marvelAPI from '../../api/marvelAPI'
 export default {
   name: 'Details',
   async asyncData({ params, query }) {
-    console.log(params)
     const movie = await marvelAPI.getMovie(query.id)
     return { movie }
   },
   mounted() {
     if (this.$store.state.store.movieList.length == 0) {
-      console.log('Details')
       this.$store.dispatch('store/getMovieList')
     }
   },
@@ -130,11 +128,9 @@ export default {
   },
   computed: {
     nextMovie() {
-      console.log(this.$store.state)
       return this.$store.state.store.movieList[this.movie.id]
     },
     previousMovie() {
-      console.log(this.$store.state)
       return this.$store.state.store.movieList[this.movie.id - 2]
     },
   },
