@@ -1,6 +1,7 @@
 <template>
   <div
     id="timeline"
+    ref="timeline"
     class="flex bg-black h-screen w-screen overflow-x-scroll overflow-y-hidden scrollbar-hidden scroll-smooth min-h-[700px]"
   >
     <div class="flex flex-row justify-center items-center">
@@ -8,8 +9,7 @@
         class="md:w-screen/2 w-screen h-screen flex flex-1 flex-col items-center"
       >
         <div class="mb-5">
-          <h1 class="text-white mt-20 font-extrabold">MCU Timeline</h1>
-          <p class="text-white">TODO</p>
+          <h1 class="text-white mt-20 font-extrabold">MCU Timeline (WIP)</h1>
           <a class="text-marvel-red cursor-pointer" @click="scrollTo('now')"
             >Click here to focus on now</a
           >
@@ -32,7 +32,6 @@
           ]"
           v-model="phase"
         />
-        <p class="text-white">TODO</p>
       </div>
       <template v-if="filteredMovies">
         <div
@@ -205,7 +204,7 @@ export default {
       return this.movies.filter((movie) =>
         movie.title.toLowerCase().includes(this.search.toLowerCase())
       )
-    },
+    }
   },
   computed: {
     filteredMovies() {
