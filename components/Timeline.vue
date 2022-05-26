@@ -194,7 +194,7 @@ export default {
       this.$event('unselect')
     },
     scrollTo(id) {
-      document.getElementById(id).scrollIntoView({ inline: 'center' })
+      document.getElementById(id)?.scrollIntoView({ inline: 'center' })
     },
     phaseFilter(movies) {
       if (this.phase == 0) return movies
