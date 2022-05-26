@@ -20,6 +20,19 @@
           type="text"
           v-model="search"
         />
+        <subcomponentsDropdown
+          class="mt-2 w-48"
+          dropdownName="Test"
+          :options="[
+            { label: 'All phases', value: 0 },
+            { label: 'Phase 1', value: 1 },
+            { label: 'Phase 2', value: 2 },
+            { label: 'Phase 3', value: 3 },
+            { label: 'Phase 4', value: 4 },
+          ]"
+          v-model="phase"
+        />
+        <p class="text-white">TODO</p>
       </div>
       <template v-if="filteredMovies">
         <div
@@ -173,6 +186,7 @@ export default {
       downBannerHover: false,
       search: '',
       moment: moment,
+      phase: 0,
     }
   },
   methods: {
@@ -182,13 +196,20 @@ export default {
     scrollTo(id) {
       document.getElementById(id).scrollIntoView({ inline: 'center' })
     },
+    phaseFilter(movies) {
+      if (this.phase == 0) return movies
+      return movies.filter((movie) => movie.phase == this.phase)
+    },
+    searchFilter() {
+      if (!this.search) return this.movies
+      return this.movies.filter((movie) =>
+        movie.title.toLowerCase().includes(this.search.toLowerCase())
+      )
+    },
   },
   computed: {
     filteredMovies() {
-      if (!this.search) return this.movies
-      let newMovieList = this.movies.filter((movie) =>
-        movie.title.toLowerCase().includes(this.search.toLowerCase())
-      )
+      let newMovieList = this.phaseFilter(this.searchFilter(this.movies))
       console.log(newMovieList)
       return newMovieList
     },

@@ -24,7 +24,7 @@ export default {
       let response = await marvelAPI.getMovies(
         null,
         'release_date, ASC',
-        'title,release_date,cover_url,id,chronology'
+        'title,phase,release_date,cover_url,id,chronology'
       )
       this.movies = response
       this.$store.commit('store/setMovieList', response)

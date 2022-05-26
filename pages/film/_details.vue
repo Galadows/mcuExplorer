@@ -10,14 +10,20 @@
           :alt="movie.title + ' cover'"
           class="p-5 max-w-full"
         />
-        <div v-else class="bg-black m-5 w-[14rem] h-[20rem] flex justify-center items-center"> No cover yet</div>
-        <div v-if="movie.trailer_url">
-          <h1>Directed by: {{ movie.directed_by }}</h1>
-          <h1>Release date: {{ movie.release_date }}</h1>
-          <h1>Duration: {{ movie.duration }} minutes</h1>
-          <h1>Saga: {{ movie.saga }}</h1>
-          <h1>Phase: {{ movie.phase }}</h1>
-          <h1>Box office: {{ movie.box_office }} Millions USD</h1>
+        <div
+          v-else
+          class="bg-black m-5 w-[14rem] h-[20rem] flex justify-center"
+        >
+          No cover yet
+        </div>
+        <div v-if="movie.trailer_url" class=" text-left">
+          <h1 class="pl-5">Directed by: {{ movie.directed_by }}</h1>
+          <h1 class="pl-5">Release date: {{ movie.release_date }}</h1>
+          <h1 class="pl-5">Duration: {{ movie.duration }} minutes</h1>
+          <h1 class="pl-5">Post-credit scenes: {{ movie.post_credit_scenes }}</h1>
+          <h1 class="pl-5">Saga: {{ movie.saga || "Not named yet" }}</h1>
+          <h1 class="pl-5">Phase: {{ movie.phase }}</h1>
+          <h1 class="pl-5">Box office: {{ numberWithCommas(movie.box_office) }} Millions USD</h1>
         </div>
         <div v-else>
           <h1>Not enough infos yet</h1>
@@ -50,40 +56,42 @@
         >
       </div>
     </div>
-    <div class="flex flex-1 2xl:flex-row flex-col h-full p-10 text-white">
-      <div>
-        <h1 class="text-3xl mb-10 font-extrabold">{{ movie.title }}</h1>
-        <div class="lg:w-3/4" v-if="movie.overview">
-          <h2>Overview:</h2>
-          <p>{{ movie.overview }}</p>
+    <div class="flex flex-1 flex-col p-10 text-white">
+      <div class="flex 2xl:flex-row flex-col">
+        <div class="h-fit">
+          <h1 class="text-3xl mb-10 font-extrabold">{{ movie.title }}</h1>
+          <div class="lg:w-3/4" v-if="movie.overview">
+            <h2>Overview:</h2>
+            <p>{{ movie.overview }}</p>
+          </div>
         </div>
-      </div>
-      <div class="w-full">
-        <div
-          class="lg:w-[560px] lg:h-[315px] 2xl:m-0 mt-10 w-full"
-          v-if="movie.trailer_url"
-        >
-          <iframe
-            v-if="movie.trailer_url.includes('youtu')"
-            class="aspect-video w-full"
-            :src="
-              'https://www.youtube.com/embed/' +
-              movie.trailer_url.substr(movie.trailer_url.lastIndexOf('/') + 1)
-            "
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-          <iframe
-            v-else
-            class="aspect-video w-full"
-            :src="movie.trailer_url"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
+        <div class="xl:w-fit xl:h-fit">
+          <div
+            class="lg:w-[560px] lg:h-[315px] 2xl:m-0 mt-10 w-full 2xl:relative 2xl:top-0"
+            v-if="movie.trailer_url"
+          >
+            <iframe
+              v-if="movie.trailer_url.includes('youtu')"
+              class="aspect-video w-full"
+              :src="
+                'https://www.youtube.com/embed/' +
+                movie.trailer_url.substr(movie.trailer_url.lastIndexOf('/') + 1)
+              "
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+            <iframe
+              v-else
+              class="aspect-video w-full"
+              :src="movie.trailer_url"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
         </div>
       </div>
       <div></div>
@@ -116,6 +124,9 @@ export default {
     goToPrev() {
       this.$router.go(-1)
     },
+    numberWithCommas(x) {
+    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
   },
   computed: {
     nextMovie() {

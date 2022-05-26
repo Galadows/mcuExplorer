@@ -16,7 +16,7 @@ export const actions = {
     let response = await marvelAPI.getMovies(
       null,
       'release_date, ASC',
-      'title,release_date,cover_url,id,chronology'
+      'title,phase,release_date,cover_url,id,chronology'
     )
     console.log("Response: ", response);
     context.commit('setMovieList', response)

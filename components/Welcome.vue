@@ -10,7 +10,7 @@
       <a
         @mouseenter="buttonHover = true"
         @mouseleave="buttonHover = false"
-        class="font-bold text-white md:w-[450px] text-center md:text-3xl text-xl md:p-5 p-2 m-2 border-2 cursor-pointer"
+        class="font-bold text-white md:w-[450px] text-center md:text-3xl text-xl md:p-5 w-[300px] p-2 m-2 border-2 cursor-pointer"
         href="#timeline"
       >
         {{ buttonHover ? 'Explore the MCU' : 'Welcome to MCU Explorer' }}
@@ -43,7 +43,7 @@ export default {
   methods: {
     selectOnTimelineEmiter(id) {
       this.$emit('selectOnTimeline', id)
-      document.getElementById(id).scrollIntoView({ inline: 'center' })
+      document.getElementById(id)?.scrollIntoView({ inline: 'center' })
     },
   },
   computed: {},
