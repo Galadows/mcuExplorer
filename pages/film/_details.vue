@@ -99,7 +99,7 @@
         </div>
       </div>
       <div></div>
-      <div class="text-white justify-center w-full flex text-xs absolute bottom-0 mb-1">
+      <div class="text-white justify-center w-[calc(100%-5rem)] flex text-xs absolute bottom-0 mb-1">
         <subcomponentsFooter />
       </div>
     </div>
