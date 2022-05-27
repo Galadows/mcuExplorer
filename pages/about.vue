@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-screen w-screen relative flex flex-col text-white justify-center items-center"
+    class="min-h-[100vh] min-w-[100vw] py-5 relative flex flex-col text-white justify-center items-center"
   >
     <div class="max-w-[60%] mb-10">
       <h1 class="font-extrabold">
@@ -39,12 +39,12 @@
       </p>
       <p>thanks to AugustoMarcelo for making <a href="https://github.com/AugustoMarcelo/mcuapi" class="text-marvel-red">mcuapi</a> which make the project so much less troublesome</p>
     </div>
-    <div class="mb-4">
+    <div class="my-4 h-[18px]">
 
     </div>
     <NuxtLink
       to="/#timeline"
-      class="font-extrabold italicml-2 mb-4 absolute left-1/2 right-1/2 bottom-0"
+      class="font-extrabold italic mb-4 absolute left-1/2 right-1/2 bottom-0"
       ><fa icon="house" class="mr-1"
     /></NuxtLink>
   </div>
