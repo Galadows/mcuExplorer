@@ -7,7 +7,7 @@
     <div class="h-0 w-0 absolute border-4 border-transparent  right-1 top-1/2" :class="{'border-t-white': !open, 'border-b-white': open}"></div>
       {{ selected.label }}
     </div>
-    <div v-show="open" class="absolute bg-white w-full flex flex-col p-1">
+    <div v-show="open" class="absolute bg-white w-full flex flex-col p-1 z-10">
       <p class="hover:bg-marvel-red hover:text-white" :class="{'text-marvel-red': option.value == selected.value}" v-for="option in options" :key="option.value" @click="select(option)">{{ option.label }}</p>
     </div>
   </div>
