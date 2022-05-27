@@ -18,7 +18,10 @@
         </div>
         <div v-if="movie.trailer_url" class="text-left">
           <h1 class="pl-5">Directed by: {{ movie.directed_by }}</h1>
-          <h1 class="pl-5">Release date: {{ moment(movie.release_date).format('MMMM Do YYYY') }}</h1>
+          <h1 class="pl-5">
+            Release date:
+            {{ moment(movie.release_date).format('MMMM Do YYYY') }}
+          </h1>
           <h1 class="pl-5">Duration: {{ movie.duration }} minutes</h1>
           <h1 class="pl-5">
             Post-credit scenes: {{ movie.post_credit_scenes }}
@@ -99,7 +102,9 @@
         </div>
       </div>
       <div></div>
-      <div class="text-white justify-center w-[calc(100%-5rem)] flex text-xs absolute bottom-0 mb-1">
+      <div
+        class="text-white justify-center w-[calc(100%-5rem)] flex text-xs absolute bottom-0 mb-1"
+      >
         <subcomponentsFooter />
       </div>
     </div>
@@ -120,6 +125,7 @@ export default {
     if (this.$store.state.store.movieList.length == 0) {
       this.$store.dispatch('store/getMovieList')
     }
+    window.addEventListener('keyup', this.handleKeyUp)
   },
   data() {
     return {
@@ -133,6 +139,20 @@ export default {
     },
     numberWithCommas(x) {
       return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+    },
+    handleKeyUp(event) {
+      if (event.key == 'ArrowRight') {
+        this.$router.push({
+          path: this.nextMovie.title.replaceAll(' ', '_'),
+          query: { id: this.nextMovie.id },
+        })
+      }
+      if (event.key == 'ArrowLeft') {
+         this.$router.push({
+          path: this.previousMovie.title.replaceAll(' ', '_'),
+          query: { id: this.previousMovie.id },
+        })
+      }
     },
   },
   computed: {
