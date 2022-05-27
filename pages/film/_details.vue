@@ -18,7 +18,7 @@
         </div>
         <div v-if="movie.trailer_url" class="text-left">
           <h1 class="pl-5">Directed by: {{ movie.directed_by }}</h1>
-          <h1 class="pl-5">Release date: {{ movie.release_date }}</h1>
+          <h1 class="pl-5">Release date: {{ moment(movie.release_date).format('MMMM Do YYYY') }}</h1>
           <h1 class="pl-5">Duration: {{ movie.duration }} minutes</h1>
           <h1 class="pl-5">
             Post-credit scenes: {{ movie.post_credit_scenes }}
@@ -107,6 +107,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import marvelAPI from '../../api/marvelAPI'
 
 export default {
@@ -123,6 +124,7 @@ export default {
   data() {
     return {
       movie: null,
+      moment: moment,
     }
   },
   methods: {
