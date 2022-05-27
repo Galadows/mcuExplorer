@@ -26,7 +26,7 @@
           <h1 class="pl-5">Saga: {{ movie.saga || 'Not named yet' }}</h1>
           <h1 class="pl-5">Phase: {{ movie.phase }}</h1>
           <h1 class="pl-5">
-            Box office: {{ numberWithCommas(movie.box_office) }} Millions USD
+            Box office: {{ numberWithCommas(movie.box_office) }} USD
           </h1>
         </div>
         <div v-else>
