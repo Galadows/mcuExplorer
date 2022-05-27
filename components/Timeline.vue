@@ -4,9 +4,9 @@
     ref="timeline"
     class="flex bg-black h-screen w-screen overflow-x-scroll overflow-y-hidden scrollbar-hidden scroll-smooth min-h-[700px]"
   >
-    <div class="flex flex-row justify-center items-center">
+    <div class="flex flex-row justify-center items-center relative">
       <div
-        class="md:w-screen/2 w-screen h-screen flex flex-1 flex-col items-center"
+        class="md:w-screen/2 w-screen h-screen flex flex-1 flex-col items-center mr-[7rem] relative"
       >
         <div class="mb-5">
           <h1 class="text-white mt-20 font-extrabold">MCU Timeline (WIP)</h1>
@@ -32,6 +32,24 @@
           ]"
           v-model="phase"
         />
+        <transition
+          enter-active-class="duration-1000 ease-out"
+          enter-from-class="transform opacity-0"
+          enter-to-class="opacity-100"
+          leave-active-class="duration-1000 ease-in"
+          leave-from-class="opacity-100"
+          leave-to-class="transform opacity-0"
+        >
+          <div
+            v-if="scrollOffset == 0"
+            class="absolute top-1/2 right-0 h-fit mr-5 text-white sm:hidden animate-hover-right"
+          >
+            <fa icon="angle-right" class="" />
+          </div>
+        </transition>
+        <div class="text-white flex text-xs absolute bottom-0 mb-1">
+          <subcomponentsFooter />
+        </div>
       </div>
       <template v-if="filteredMovies">
         <div
@@ -169,13 +187,15 @@ import moment from 'moment'
 
 export default {
   name: 'Timeline',
-  async mounted() {
-    let that = this
-    document.onreadystatechange = () => {
-      if (document.readyState == 'complete') {
-        that.scrollTo(that.$route.query.id)
-      }
-    }
+  mounted() {
+    let timeline = document.querySelector('#timeline')
+    timeline.addEventListener(
+      'scroll',
+      (event) => {
+        this.scrollOffset = timeline.scrollLeft
+      },
+      { passive: true }
+    )
   },
   props: ['movies', 'selected'],
 
@@ -186,6 +206,7 @@ export default {
       search: '',
       moment: moment,
       phase: 0,
+      scrollOffset: 0,
     }
   },
   methods: {
@@ -204,7 +225,7 @@ export default {
       return this.movies.filter((movie) =>
         movie.title.toLowerCase().includes(this.search.toLowerCase())
       )
-    }
+    },
   },
   computed: {
     filteredMovies() {

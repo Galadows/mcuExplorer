@@ -13,6 +13,7 @@ module.exports = {
         unblur: 'unblurred 0.2s forwards',
         'fade-in': 'fadeIn 2s ease-in-out',
         'fade-in-fast': 'fadeIn 0.2s ease-in-out',
+        'hover-right': 'hoverRight 2s ease-in-out infinite',
       },
       keyframes: {
         infiniteScroll: {
@@ -34,6 +35,11 @@ module.exports = {
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
+        },
+        hoverRight: {
+          '0%': { transform: 'translateX(0px)' },
+          '50%': { transform: 'translateX(15px)' },
+          '100%': { transform: 'translateX(0px)' },
         },
       },
       colors: {

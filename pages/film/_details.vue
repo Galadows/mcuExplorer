@@ -16,14 +16,18 @@
         >
           No cover yet
         </div>
-        <div v-if="movie.trailer_url" class=" text-left">
+        <div v-if="movie.trailer_url" class="text-left">
           <h1 class="pl-5">Directed by: {{ movie.directed_by }}</h1>
           <h1 class="pl-5">Release date: {{ movie.release_date }}</h1>
           <h1 class="pl-5">Duration: {{ movie.duration }} minutes</h1>
-          <h1 class="pl-5">Post-credit scenes: {{ movie.post_credit_scenes }}</h1>
-          <h1 class="pl-5">Saga: {{ movie.saga || "Not named yet" }}</h1>
+          <h1 class="pl-5">
+            Post-credit scenes: {{ movie.post_credit_scenes }}
+          </h1>
+          <h1 class="pl-5">Saga: {{ movie.saga || 'Not named yet' }}</h1>
           <h1 class="pl-5">Phase: {{ movie.phase }}</h1>
-          <h1 class="pl-5">Box office: {{ numberWithCommas(movie.box_office) }} Millions USD</h1>
+          <h1 class="pl-5">
+            Box office: {{ numberWithCommas(movie.box_office) }} Millions USD
+          </h1>
         </div>
         <div v-else>
           <h1>Not enough infos yet</h1>
@@ -38,13 +42,13 @@
             path: previousMovie.title.replaceAll(' ', '_'),
             query: { id: previousMovie.id },
           }"
-          >Previous movie</NuxtLink
+          ><fa icon="arrow-left" class="mr-1" /> Previous movie</NuxtLink
         >
         <NuxtLink
           to="/#timeline"
           class="font-extrabold italicml-2 mb-2 absolute left-1/2 right-1/2"
-          >Home</NuxtLink
-        >
+          ><fa icon="house" class="mr-1"
+        /></NuxtLink>
         <NuxtLink
           v-if="nextMovie"
           class="font-extrabold italicml-2 mb-2 absolute right-[5%]"
@@ -52,11 +56,11 @@
             path: nextMovie.title.replaceAll(' ', '_'),
             query: { id: nextMovie.id },
           }"
-          >Next movie</NuxtLink
-        >
+          >Next movie <fa icon="arrow-right" class="mr-1"
+        /></NuxtLink>
       </div>
     </div>
-    <div class="flex flex-1 flex-col p-10 text-white">
+    <div class="flex flex-1 flex-col p-10 relative text-white">
       <div class="flex 2xl:flex-row flex-col">
         <div class="h-fit">
           <h1 class="text-3xl mb-10 font-extrabold">{{ movie.title }}</h1>
@@ -95,6 +99,9 @@
         </div>
       </div>
       <div></div>
+      <div class="text-white justify-center w-full flex text-xs absolute bottom-0 mb-1">
+        <subcomponentsFooter />
+      </div>
     </div>
   </div>
 </template>
@@ -123,8 +130,8 @@ export default {
       this.$router.go(-1)
     },
     numberWithCommas(x) {
-    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-}
+      return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+    },
   },
   computed: {
     nextMovie() {
