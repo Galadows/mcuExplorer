@@ -89,8 +89,8 @@
             <iframe
               v-else
               class="aspect-video w-full"
-              :src="movie.trailer_url"
-              title="YouTube video player"
+              :src="movie.trailer_url.replace(/^http:\/\//i, 'https://')"
+              title="Video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
