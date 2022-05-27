@@ -18,7 +18,7 @@
         I'm always searching for new interesting projects and ideas, so don't
         hesitate to
         <a
-          href="mailto:havane.palabaud@epitech.eu"
+          href="mailto:contact.mcuexplorer@gmail.com"
           class="text-marvel-red hover:not-italic font italic"
           >contact me!</a
         >
