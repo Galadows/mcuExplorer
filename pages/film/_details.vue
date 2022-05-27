@@ -141,14 +141,16 @@ export default {
       return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
     },
     handleKeyUp(event) {
-      if (event.key == 'ArrowRight') {
+      if (event.key == 'ArrowRight' && this.nextMovie) {
+        window.removeEventListener('keyup', this.handleKeyUp)
         this.$router.push({
           path: this.nextMovie.title.replaceAll(' ', '_'),
           query: { id: this.nextMovie.id },
         })
       }
-      if (event.key == 'ArrowLeft') {
-         this.$router.push({
+      if (event.key == 'ArrowLeft'  && this.previousMovie) {
+        window.removeEventListener('keyup', this.handleKeyUp)
+        this.$router.push({
           path: this.previousMovie.title.replaceAll(' ', '_'),
           query: { id: this.previousMovie.id },
         })
@@ -157,10 +159,18 @@ export default {
   },
   computed: {
     nextMovie() {
-      return this.$store.state.store.movieList[this.movie.id]
+      return this.$store.state.store.movieList[
+        this.$store.state.store.movieList.findIndex(
+          (movie) => movie.id == this.movie.id
+        ) + 1
+      ]
     },
     previousMovie() {
-      return this.$store.state.store.movieList[this.movie.id - 2]
+      return this.$store.state.store.movieList[
+        this.$store.state.store.movieList.findIndex(
+          (movie) => movie.id == this.movie.id
+        ) - 1
+      ]
     },
   },
 }

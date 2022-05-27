@@ -32,6 +32,12 @@
           ]"
           v-model="phase"
         />
+        <subcomponentsToggle
+          v-model="chronologicalOrder"
+          falseOption="Release date"
+          trueOption="Chronological order"
+          class="my-2"
+        />
         <transition
           enter-active-class="duration-1000 ease-out"
           enter-from-class="transform opacity-0"
@@ -207,6 +213,7 @@ export default {
       moment: moment,
       phase: 0,
       scrollOffset: 0,
+      chronologicalOrder: false,
     }
   },
   methods: {
@@ -226,9 +233,41 @@ export default {
         movie.title.toLowerCase().includes(this.search.toLowerCase())
       )
     },
+    sortByChronology(a, b) {
+      if (a.chronology === null) {
+        return 1
+      }
+      if (b.chronology === null) {
+        return -1
+      }
+      if (a.chronology < b.chronology) {
+        return -1
+      }
+      if (a.chronology > b.chronology) {
+        return 1
+      }
+      return 0
+    },
+    sortByReleaseDate(a, b) {
+      if (a.release_date === null) {
+        return 1
+      }
+      if (b.release_date === null) {
+        return -1
+      }
+      if (moment(a.release_date).isBefore(b.release_date)) {
+        return -1
+      }
+      if (moment(a.release_date).isAfter(b.release_date)) {
+        return 1
+      }
+      return 0
+    },
   },
   computed: {
     filteredMovies() {
+      if (this.chronologicalOrder) this.movies.sort(this.sortByChronology)
+      else this.movies.sort(this.sortByReleaseDate)
       let newMovieList = this.phaseFilter(this.searchFilter(this.movies))
       return newMovieList
     },
