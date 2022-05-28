@@ -2,7 +2,7 @@
   <div
     id="timeline"
     ref="timeline"
-    class="flex bg-black h-screen w-screen overflow-x-scroll overflow-y-hidden scrollbar-hidden scroll-smooth min-h-[700px]"
+    class="flex bg-black h-screen w-screen overflow-x-scroll overflow-y-hidden scrollbar-hidden scroll-smooth min-h-[700px] select-none"
   >
     <div class="flex flex-row justify-center items-center relative">
       <div
@@ -10,7 +10,13 @@
       >
         <div class="mb-5">
           <h1 class="text-white mt-20 font-extrabold">MCU Timeline (WIP)</h1>
-          <a class="text-marvel-red cursor-pointer" @click="scrollTo('now')"
+          <a
+            class="text-marvel-red"
+            :class="{
+              'text-marvel-red cursor-pointer': !chronologicalOrder,
+              'opacity-40': chronologicalOrder,
+            }"
+            @click="scrollTo('now')"
             >Click here to focus on now</a
           >
         </div>
@@ -64,10 +70,13 @@
           :key="movie.title + '-Timeline'"
           @mouseenter="movie.id == selected ? $emit('unselect') : null"
           :class="{
-            'bg-marvel-red': moment(movie.release_date).isBefore(new Date()),
+            'bg-marvel-red':
+              moment(movie.release_date).isBefore(new Date()) ||
+              chronologicalOrder,
             'bg-blue-900':
-              moment(movie.release_date).isAfter(new Date()) ||
-              !movie.release_date,
+              (moment(movie.release_date).isAfter(new Date()) ||
+                !movie.release_date) &&
+              !chronologicalOrder,
           }"
         >
           <div
@@ -166,7 +175,10 @@
             v-if="
               filteredMovies[index + 1] &&
               moment(movie.release_date).isBefore(new Date()) &&
-              moment(filteredMovies[index + 1].release_date).isAfter(new Date())
+              moment(filteredMovies[index + 1].release_date).isAfter(
+                new Date()
+              ) &&
+              !chronologicalOrder
             "
           >
             <div
@@ -182,7 +194,7 @@
         </div>
       </template>
       <div class="border-2 border-blue-900 h-4 w-4" style="" />
-      <div class="w-screen/2 h-screen"></div>
+      <div class="md:w-screen/2 w-screen h-screen"></div>
     </div>
   </div>
 </template>

@@ -13,7 +13,7 @@
 <script>
 export default {
   name: 'Toggle',
-  props: ['trueOption', 'falseOption'],
+  props: ['trueOption', 'falseOption', 'value'],
   data() {
     return {
       value: false,
