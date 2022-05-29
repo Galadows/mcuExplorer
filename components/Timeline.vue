@@ -103,7 +103,7 @@
             }"
           >
             <div
-              :id="movie.type+'-'+movie.id"
+              :id="movie.type + '-' + movie.id"
               class="flex flex-col tall:landscape:absolute landscape:static absolute justify-center items-center w-56 text-center"
               :class="{
                 'md:top-[-25rem] -top-72': index % 2 == 0,
@@ -111,6 +111,7 @@
               }"
             >
               <NuxtLink
+                class="relative"
                 :to="{
                   path:
                     movie.type == 'movie'
@@ -241,7 +242,8 @@ export default {
       moment: moment,
       phase: this.$store.state.store.currentParams.phase,
       scrollOffset: 0,
-      chronologicalOrder: this.$store.state.store.currentParams.chronologicalOrder,
+      chronologicalOrder:
+        this.$store.state.store.currentParams.chronologicalOrder,
       displayMovies: this.$store.state.store.currentParams.displayMovies,
       displayShows: this.$store.state.store.currentParams.displayShows,
     }
