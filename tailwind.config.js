@@ -2,6 +2,10 @@ module.exports = {
   content: ['./src/**/*.{html,js}'],
   theme: {
     extend: {
+      screens: {
+        'tall': { 'raw': '(min-height: 800px)' },
+        'medium': { 'raw': '(min-height: 450px)' }
+      },
       width: {
         'screen/2': 'calc(100vw / 2)',
       },

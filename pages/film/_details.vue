@@ -3,41 +3,48 @@
     <div
       class="flex flex-col items-center lg:w-96 w-screen min-h-fit bg-marvel-red text-white"
     >
-      <div class="flex flex-col flex-1 text-center font-bold">
+      <div
+        class="flex lg:flex-col md:flex-row flex-col flex-1 text-center font-bold"
+      >
         <img
           v-if="movie.cover_url"
           :src="movie.cover_url"
           :alt="movie.title + ' cover'"
-          class="p-5 max-w-full"
+          class="tall:p-5 p-12 max-w-full"
         />
         <div
           v-else
-          class="bg-black m-5 w-[14rem] h-[20rem] flex justify-center"
+          class="bg-black m-5 w-[14rem] h-[20rem] flex flex-1 justify-center"
         >
           No cover yet
         </div>
-        <div v-if="movie.trailer_url" class="text-left">
-          <h1 class="pl-5">Directed by: {{ movie.directed_by }}</h1>
-          <h1 class="pl-5">
-            Release date:
-            {{ moment(movie.release_date).format('MMMM Do YYYY') }}
-          </h1>
-          <h1 class="pl-5">Duration: {{ movie.duration }} minutes</h1>
-          <h1 class="pl-5">
-            Post-credit scenes: {{ movie.post_credit_scenes }}
-          </h1>
-          <h1 class="pl-5">Saga: {{ movie.saga || 'Not named yet' }}</h1>
-          <h1 class="pl-5">Phase: {{ movie.phase }}</h1>
-          <h1 class="pl-5">
-            Box office: {{ numberWithCommas(movie.box_office) }} USD
-          </h1>
+        <div
+          v-if="movie.trailer_url"
+          class="flex text-left flex-col justify-center items-center"
+        >
+          <div class="w-fit">
+            <h1 class="pl-5">Directed by: {{ movie.directed_by }}</h1>
+            <h1 class="pl-5">
+              Release date:
+              {{ moment(movie.release_date).format('MMMM Do YYYY') }}
+            </h1>
+            <h1 class="pl-5">Duration: {{ movie.duration }} minutes</h1>
+            <h1 class="pl-5">
+              Post-credit scenes: {{ movie.post_credit_scenes }}
+            </h1>
+            <h1 class="pl-5">Saga: {{ movie.saga || 'Not named yet' }}</h1>
+            <h1 class="pl-5">Phase: {{ movie.phase }}</h1>
+            <h1 class="pl-5">
+              Box office: {{ numberWithCommas(movie.box_office) }} USD
+            </h1>
+          </div>
         </div>
         <div v-else>
           <h1>Not enough infos yet</h1>
         </div>
       </div>
 
-      <div class="flex relative w-full h-10 p-2 m-5 mb-0 text-white">
+      <div class="relative w-full h-10 p-2 m-5 mb-0 text-white">
         <NuxtLink
           v-if="previousMovie"
           class="font-extrabold italicml-2 mb-2 absolute left-[5%]"

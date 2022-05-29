@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-1 justify-center items-center"
+    class="flex flex-1 justify-center items-center select-none"
     :class="{
       pause: bannerHovered,
       'animate-infinite-scroll': !invert,
@@ -24,7 +24,7 @@
           }
         "
         @click="$emit('imageClicked', image.id)"
-        class="w-[172.77px] h-[256px] m-10 animate-fade-in"
+        class="w-[172.77px] h-[256px] mx-10 animate-fade-in"
       >
         <h1
           class="absolute w-[172.77px] h-[256px] text flex justify-center items-center text-center z-10 text-white font-bold pointer-events-none px-2"

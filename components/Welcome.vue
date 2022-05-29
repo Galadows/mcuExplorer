@@ -43,7 +43,10 @@ export default {
   methods: {
     selectOnTimelineEmiter(id) {
       this.$emit('selectOnTimeline', id)
-      document.getElementById(id)?.scrollIntoView({ inline: 'center' })
+      let element = document.getElementById(id)
+      if (element) {
+        element.scrollIntoView({ inline: 'center' })
+      }
     },
   },
   computed: {},

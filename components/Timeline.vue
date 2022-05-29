@@ -2,7 +2,8 @@
   <div
     id="timeline"
     ref="timeline"
-    class="flex bg-black h-screen w-screen overflow-x-scroll overflow-y-hidden scrollbar-hidden scroll-smooth min-h-[700px] select-none"
+    class="flex bg-black h-screen w-screen overflow-x-scroll overflow-y-hidden scrollbar-hidden scroll-smooth select-none"
+
   >
     <div class="flex flex-row justify-center items-center relative">
       <div
@@ -54,7 +55,7 @@
         >
           <div
             v-if="scrollOffset == 0"
-            class="absolute top-1/2 right-0 h-fit mr-5 text-white sm:hidden animate-hover-right"
+            class="absolute top-1/2 right-0 h-fit mr-5 text-white tall:hidden md:hidden animate-hover-right"
           >
             <fa icon="angle-right" class="" />
           </div>
@@ -80,7 +81,7 @@
           }"
         >
           <div
-            class="h-4 w-4 border-2 relative right-3 bg-black hover:border-white rounded-full"
+            class="h-4 w-4 border-2 bg-black relative hover:border-white rounded-full flex flex-col justify-center items-center"
             :class="{
               'border-marvel-red': moment(movie.release_date).isBefore(
                 new Date()
@@ -99,7 +100,7 @@
           /> -->
             <div
               :id="movie.id"
-              class="flex flex-col relative right-28 justify-center items-center w-56 text-center"
+              class="flex flex-col tall:landscape:absolute landscape:static absolute justify-center items-center w-56 text-center"
               :class="{
                 'md:top-[-25rem] -top-72': index % 2 == 0,
                 'top-6': index % 2 != 0,
@@ -182,7 +183,7 @@
             "
           >
             <div
-              class="relative md:right-[-10.5rem] right-[-7.5rem] md:w-[12rem] w-[9rem] h-1 bg-blue-900"
+              class="relative md:right-[-10.8rem] right-[-8rem] md:w-[12.5rem] w-[9.5rem] h-1 bg-blue-900"
             ></div>
             <div
               id="now"

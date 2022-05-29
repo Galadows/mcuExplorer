@@ -14,11 +14,6 @@
 export default {
   name: 'Toggle',
   props: ['trueOption', 'falseOption', 'value'],
-  data() {
-    return {
-      value: false,
-    }
-  },
   methods: {
     toggleValue() {
       this.value = !this.value
