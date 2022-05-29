@@ -24,16 +24,11 @@ class marvelAPI {
       })
       .then(function (response) {
         // handle success
-       let data = []
-        response.data.data.forEach(movie => {
-          movie.type = 'movie'
-          data.push(movie)
-        });
-        return (data)
+        return (data = response.data.data)
       })
       .catch(function (error) {
         return error
-      })
+      }) // handle error
       .then(function () {
         // always executed
       })
@@ -47,19 +42,13 @@ class marvelAPI {
       .get('https://mcuapi.herokuapp.com/api/v1/movies/' + id)
       .then(function (response) {
         // handle success
-        let data = response.data.data
-        data.type = 'movie'
-        return (data)
+        console.log(response.data)
+        return (data = response.data)
       })
       .catch(function (error) {
         // handle error
-        // console.log(error)
-        return errorCallback({statusCode:error.statusCode, message: error.message})
+        errorCallback(error)
       })
-      .then(function () {
-        // always executed
-      })
-
     return data
   }
 
@@ -73,7 +62,6 @@ class marvelAPI {
       page: page,
       limit: limit,
       columns: properties,
-      // order: order || 'chronology,ASC',
       filter: filter,
     }
 
@@ -85,16 +73,11 @@ class marvelAPI {
       })
       .then(function (response) {
         // handle success
-        let data = []
-        response.data.data.forEach(show => {
-          show.type = 'show'
-          data.push(show)
-        });
-        return (data)
+        return (data = response.data.data)
       })
       .catch(function (error) {
         return error
-      })
+      }) // handle error
       .then(function () {
         // always executed
       })
@@ -108,19 +91,14 @@ class marvelAPI {
       .get('https://mcuapi.herokuapp.com/api/v1/tvshows/' + id)
       .then(function (response) {
         // handle success
-        let data = response.data.data
-        data.type = 'show'
-        return (data)
+        console.log('Show Response');
+        return (data = response.data)
       })
       .catch(function (error) {
         // handle error
-        // console.log(error)
-        return errorCallback({statusCode:error.statusCode, message: error.message})
+        console.log('Show Error');
+        errorCallback(error)
       })
-      .then(function () {
-        // always executed
-      })
-
     return data
   }
 }

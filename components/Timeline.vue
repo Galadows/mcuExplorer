@@ -3,14 +3,13 @@
     id="timeline"
     ref="timeline"
     class="flex bg-black h-screen w-screen overflow-x-scroll overflow-y-hidden scrollbar-hidden scroll-smooth select-none"
-
   >
     <div class="flex flex-row justify-center items-center relative">
       <div
-        class="md:w-screen/2 w-screen h-screen flex flex-1 flex-col items-center mr-[7rem] relative"
+        class="md:w-screen/2 w-screen h-screen flex flex-col items-center justify-center mr-[7rem] relative"
       >
         <div class="mb-5">
-          <h1 class="text-white mt-20 font-extrabold">MCU Timeline (WIP)</h1>
+          <h1 class="text-white mt-2 font-extrabold">MCU Timeline (WIP)</h1>
           <a
             class="text-marvel-red"
             :class="{
@@ -45,6 +44,18 @@
           trueOption="Chronological order"
           class="my-2"
         />
+        <subcomponentsToggle
+          v-model="displayShows"
+          tickable="true"
+          label="Display tv shows"
+          class="my-2"
+        />
+        <subcomponentsToggle
+          v-model="displayMovies"
+          tickable="true"
+          label="Display movies"
+          class="my-2"
+        />
         <transition
           enter-active-class="duration-1000 ease-out"
           enter-from-class="transform opacity-0"
@@ -55,7 +66,7 @@
         >
           <div
             v-if="scrollOffset == 0"
-            class="absolute top-1/2 right-0 h-fit mr-5 text-white tall:hidden md:hidden animate-hover-right"
+            class="absolute top-1/2 right-0 h-fit mr-10 text-white tall:hidden md:hidden animate-hover-right"
           >
             <fa icon="angle-right" class="" />
           </div>
@@ -64,7 +75,7 @@
           <subcomponentsFooter />
         </div>
       </div>
-      <template v-if="filteredMovies">
+      <template v-if="filteredMovies.length > 0">
         <div
           class="h-1 md:w-96 w-72 flex items-center"
           v-for="(movie, index) in filteredMovies"
@@ -91,13 +102,6 @@
                 !movie.release_date,
             }"
           >
-            <!-- <div
-            class="h-4 w-4 border-2 relative top-[-2px] right-[2px] bg-black border-marvel-red hover:border-white rounded-full"
-            :class="{
-              'animate-ping border-white': selected == movie.id,
-              hidden: selected != movie.id,
-            }"
-          /> -->
             <div
               :id="movie.id"
               class="flex flex-col tall:landscape:absolute landscape:static absolute justify-center items-center w-56 text-center"
@@ -108,7 +112,10 @@
             >
               <NuxtLink
                 :to="{
-                  path: 'film/' + movie.title.replaceAll(' ', '_'),
+                  path:
+                    movie.type == 'movie'
+                      ? 'movie/' + movie.title.replaceAll(' ', '_')
+                      : 'show/' + movie.title.replaceAll(' ', '_'),
                   query: { id: movie.id },
                 }"
               >
@@ -151,7 +158,10 @@
               </h1>
               <NuxtLink
                 :to="{
-                  path: 'film/' + movie.title.replaceAll(' ', '_'),
+                  path:
+                    movie.type == 'movie'
+                      ? 'movie/' + movie.title.replaceAll(' ', '_')
+                      : 'show/' + movie.title.replaceAll(' ', '_'),
                   query: { id: movie.id },
                 }"
               >
@@ -193,8 +203,13 @@
             </div>
           </template>
         </div>
+        <div class="border-2 border-blue-900 h-4 w-4" style="" />
       </template>
-      <div class="border-2 border-blue-900 h-4 w-4" style="" />
+      <div v-else class="md:w-96 w-72 flex items-center">
+        <h1 class="text-white md:block hidden">
+          Nothing to display, try to make the filters a bit less restricting
+        </h1>
+      </div>
       <div class="md:w-screen/2 w-screen h-screen"></div>
     </div>
   </div>
@@ -227,6 +242,8 @@ export default {
       phase: 0,
       scrollOffset: 0,
       chronologicalOrder: false,
+      displayMovies: true,
+      displayShows: false,
     }
   },
   methods: {
@@ -276,12 +293,22 @@ export default {
       }
       return 0
     },
+    filterTypes(movies) {
+      return movies.filter(
+        (movie) =>
+          (movie.type == 'movie' && this.displayMovies) ||
+          (movie.type == 'show' && this.displayShows)
+      )
+    },
   },
   computed: {
     filteredMovies() {
       if (this.chronologicalOrder) this.movies.sort(this.sortByChronology)
       else this.movies.sort(this.sortByReleaseDate)
-      let newMovieList = this.phaseFilter(this.searchFilter(this.movies))
+      let newMovieList = this.filterTypes(
+        this.phaseFilter(this.searchFilter(this.movies))
+      )
+      this.$store.commit('store/setMovieAndShowList', newMovieList)
       return newMovieList
     },
   },

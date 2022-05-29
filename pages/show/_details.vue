@@ -7,9 +7,9 @@
         class="flex lg:flex-col md:flex-row flex-col flex-1 text-center font-bold"
       >
         <img
-          v-if="movie.cover_url"
-          :src="movie.cover_url"
-          :alt="movie.title + ' cover'"
+          v-if="show.cover_url"
+          :src="show.cover_url"
+          :alt="show.title + ' cover'"
           class="tall:p-5 p-12 max-w-full"
         />
         <div
@@ -19,24 +19,19 @@
           No cover yet
         </div>
         <div
-          v-if="movie.trailer_url"
+          v-if="show.trailer_url"
           class="flex text-left flex-col justify-center items-center"
         >
           <div class="w-fit">
-            <h1 class="pl-5">Directed by: {{ movie.directed_by }}</h1>
+            <h1 class="pl-5">Directed by: {{ show.directed_by }}</h1>
             <h1 class="pl-5">
               Release date:
-              {{ moment(movie.release_date).format('MMMM Do YYYY') }}
+              {{ moment(show.release_date).format('MMMM Do YYYY') }}
             </h1>
-            <h1 class="pl-5">Duration: {{ movie.duration }} minutes</h1>
-            <h1 class="pl-5">
-              Post-credit scenes: {{ movie.post_credit_scenes }}
-            </h1>
-            <h1 class="pl-5">Saga: {{ movie.saga || 'Not named yet' }}</h1>
-            <h1 class="pl-5">Phase: {{ movie.phase }}</h1>
-            <h1 class="pl-5">
-              Box office: {{ numberWithCommas(movie.box_office) }} USD
-            </h1>
+            <h1 class="pl-5">Number of season: {{ show.number_seasons }}</h1>
+            <h1 class="pl-5">Number of episodes: {{ show.number_episodes }}</h1>
+            <h1 class="pl-5">Saga: {{ show.saga || 'Not named yet' }}</h1>
+            <h1 class="pl-5">Phase: {{ show.phase }}</h1>
           </div>
         </div>
         <div v-else>
@@ -52,7 +47,7 @@
             path: previousMovie.title.replaceAll(' ', '_'),
             query: { id: previousMovie.id },
           }"
-          ><fa icon="arrow-left" class="mr-1" /> Previous movie</NuxtLink
+          ><fa icon="arrow-left" class="mr-1" /> Previous show</NuxtLink
         >
         <NuxtLink
           to="/#timeline"
@@ -66,30 +61,30 @@
             path: nextMovie.title.replaceAll(' ', '_'),
             query: { id: nextMovie.id },
           }"
-          >Next movie <fa icon="arrow-right" class="mr-1"
+          >Next show <fa icon="arrow-right" class="mr-1"
         /></NuxtLink>
       </div>
     </div>
     <div class="flex flex-1 flex-col p-10 relative text-white">
       <div class="flex 2xl:flex-row flex-col">
         <div class="h-fit">
-          <h1 class="text-3xl mb-10 font-extrabold">{{ movie.title }}</h1>
-          <div class="lg:w-3/4" v-if="movie.overview">
+          <h1 class="text-3xl mb-10 font-extrabold">{{ show.title }}</h1>
+          <div class="lg:w-3/4" v-if="show.overview">
             <h2>Overview:</h2>
-            <p>{{ movie.overview }}</p>
+            <p>{{ show.overview }}</p>
           </div>
         </div>
         <div class="xl:w-fit xl:h-fit">
           <div
             class="lg:w-[560px] lg:h-[315px] 2xl:m-0 mt-10 w-full 2xl:relative 2xl:top-0"
-            v-if="movie.trailer_url"
+            v-if="show.trailer_url"
           >
             <iframe
-              v-if="movie.trailer_url.includes('youtu')"
+              v-if="show.trailer_url.includes('youtu')"
               class="aspect-video w-full"
               :src="
                 'https://www.youtube.com/embed/' +
-                movie.trailer_url.substr(movie.trailer_url.lastIndexOf('/') + 1)
+                show.trailer_url.substr(show.trailer_url.lastIndexOf('/') + 1)
               "
               title="YouTube video player"
               frameborder="0"
@@ -99,7 +94,7 @@
             <iframe
               v-else
               class="aspect-video w-full"
-              :src="movie.trailer_url.replace(/^http:\/\//i, 'https://')"
+              :src="show.trailer_url.replace(/^http:\/\//i, 'https://')"
               title="Video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -120,13 +115,22 @@
 
 <script>
 import moment from 'moment'
-import marvelAPI from '../../api/marvelAPI'
+import marvelAPI from '~/api/marvelAPI'
 
 export default {
   name: 'Details',
   async asyncData(context) {
-    const movie = await marvelAPI.getMovie(context.query.id, context.error)
-    return { movie }
+    let title;
+    if (context.params.details) {
+      title = context.params.details.toString().split('_').join(' ')
+    }
+    const show = await marvelAPI.getShow(context.query.id, context.error)
+    if (show && show.title != title) {
+      context.redirect(
+        '/show/' + show.title.split(' ').join('_') + '?id=' + show.id
+      )
+    }
+    return { show }
   },
   mounted() {
     if (this.$store.state.store.movieList.length == 0) {
@@ -136,7 +140,7 @@ export default {
   },
   data() {
     return {
-      movie: null,
+      show: null,
       moment: moment,
     }
   },
@@ -168,14 +172,14 @@ export default {
     nextMovie() {
       return this.$store.state.store.movieList[
         this.$store.state.store.movieList.findIndex(
-          (movie) => movie.id == this.movie.id
+          (movie) => movie.id == this.show.id
         ) + 1
       ]
     },
     previousMovie() {
       return this.$store.state.store.movieList[
         this.$store.state.store.movieList.findIndex(
-          (movie) => movie.id == this.movie.id
+          (movie) => movie.id == this.show.id
         ) - 1
       ]
     },

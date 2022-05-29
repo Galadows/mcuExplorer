@@ -26,15 +26,28 @@ export default {
         'release_date, ASC',
         'title,phase,release_date,cover_url,id,chronology'
       )
-      this.movies = response
-      this.$store.commit('store/setMovieList', response)
-    }else {
-      this.movies = this.$store.state.store.movieList;
+      response.forEach((movie) => {
+        movie.type = 'movie'
+        this.movies.push(movie)
+      })
+      this.$store.commit('store/setMovieList', this.movies)
+    } else {
+      this.movies = this.$store.state.store.movieList
     }
+
+    let response2 = await marvelAPI.getShows(
+      null,
+      'title,phase,release_date,cover_url,id'
+    )
+    response2.forEach((show) => {
+      show.type = 'show'
+      this.shows.push(show)
+    })
   },
   data() {
     return {
       movies: [],
+      shows: [],
       upBannerHover: false,
       downBannerHover: false,
       selected: null,
@@ -47,14 +60,18 @@ export default {
   },
   computed: {
     covers() {
-      let moviesWithCovers = []
-      this.movies.forEach((movie) => {
-        if (movie.cover_url) {
-          moviesWithCovers.push(movie)
+      if (!this.movies) return
+      let withCovers = []
+      this.moviesAndShows.forEach((thing) => {
+        if (thing.cover_url) {
+          withCovers.push(thing)
         }
       })
-      return moviesWithCovers
+      return withCovers
     },
+    moviesAndShows(){
+      return [...this.movies,...this.shows]
+    }
   },
 }
 </script>
