@@ -195,9 +195,9 @@ export default {
       ]
     },
     previousMovie() {
-      return this.$store.state.store.movieList[
-        this.$store.state.store.movieList.findIndex(
-          (movie) => movie.id == this.movie.id
+      return this.$store.state.store.movieAndShowList[
+        this.$store.state.store.movieAndShowList.findIndex(
+          (movie) => movie.id == this.movie.id && movie.type == this.movie.type
         ) - 1
       ]
     },
