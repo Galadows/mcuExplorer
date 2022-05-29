@@ -117,8 +117,8 @@ import marvelAPI from '../../api/marvelAPI'
 
 export default {
   name: 'Details',
-  async asyncData({ params, query }) {
-    const movie = await marvelAPI.getMovie(query.id)
+  async asyncData(context) {
+    const movie = await marvelAPI.getMovie(context.query.id, context.error)
     return { movie }
   },
   mounted() {
@@ -148,7 +148,7 @@ export default {
           query: { id: this.nextMovie.id },
         })
       }
-      if (event.key == 'ArrowLeft'  && this.previousMovie) {
+      if (event.key == 'ArrowLeft' && this.previousMovie) {
         window.removeEventListener('keyup', this.handleKeyUp)
         this.$router.push({
           path: this.previousMovie.title.replaceAll(' ', '_'),

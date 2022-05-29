@@ -27,7 +27,7 @@ class marvelAPI {
         return (data = response.data.data)
       })
       .catch(function (error) {
-        // handle error
+        return error
       })
       .then(function () {
         // always executed
@@ -36,7 +36,7 @@ class marvelAPI {
     return data
   }
 
-  static async getMovie(id) {
+  static async getMovie(id, errorCallback) {
     let data
     await axios
       .get('https://mcuapi.herokuapp.com/api/v1/movies/' + id)
@@ -46,7 +46,8 @@ class marvelAPI {
       })
       .catch(function (error) {
         // handle error
-        console.log(error)
+        // console.log(error)
+        return errorCallback({statusCode:error.statusCode, message: error.message})
       })
       .then(function () {
         // always executed
