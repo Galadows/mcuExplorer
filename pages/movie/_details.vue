@@ -14,7 +14,7 @@
         />
         <div
           v-else
-          class="bg-black m-5 w-[14rem] h-[20rem] flex flex-1 justify-center"
+          class="bg-black m-5 w-[14rem] h-[20rem] flex justify-center"
         >
           No cover yet
         </div>
@@ -39,7 +39,7 @@
             </h1>
           </div>
         </div>
-        <div v-else>
+        <div v-else class="flex text-left flex-col justify-center items-center">
           <h1>Not enough infos yet</h1>
         </div>
       </div>
@@ -49,7 +49,7 @@
           v-if="previousMovie"
           class="font-extrabold italicml-2 mb-2 absolute left-[5%]"
           :to="{
-            path: previousMovie.title.replaceAll(' ', '_'),
+            path: '/' + previousMovie.type + '/' + previousMovie.title.replaceAll(' ', '_'),
             query: { id: previousMovie.id },
           }"
           ><fa icon="arrow-left" class="mr-1" /> Previous movie</NuxtLink
@@ -63,7 +63,7 @@
           v-if="nextMovie"
           class="font-extrabold italicml-2 mb-2 absolute right-[5%]"
           :to="{
-            path: nextMovie.title.replaceAll(' ', '_'),
+            path:'/' + nextMovie.type + '/' + nextMovie.title.replaceAll(' ', '_'),
             query: { id: nextMovie.id },
           }"
           >Next movie <fa icon="arrow-right" class="mr-1"
@@ -141,6 +141,9 @@ export default {
     if (this.$store.state.store.movieList.length == 0) {
       this.$store.dispatch('store/getMovieList')
     }
+    if (this.$store.state.store.movieAndShowList.length == 0) {
+      this.$store.dispatch('store/getMovieAndShowList')
+    }
     window.addEventListener('keyup', this.handleKeyUp)
   },
   data() {
@@ -160,14 +163,14 @@ export default {
       if (event.key == 'ArrowRight' && this.nextMovie) {
         window.removeEventListener('keyup', this.handleKeyUp)
         this.$router.push({
-          path: this.nextMovie.title.replaceAll(' ', '_'),
+          path:'/' + nextMovie.type + '/' + nextMovie.title.replaceAll(' ', '_'),
           query: { id: this.nextMovie.id },
         })
       }
       if (event.key == 'ArrowLeft' && this.previousMovie) {
         window.removeEventListener('keyup', this.handleKeyUp)
         this.$router.push({
-          path: this.previousMovie.title.replaceAll(' ', '_'),
+          path: '/' + previousMovie.type + '/' + previousMovie.title.replaceAll(' ', '_'),
           query: { id: this.previousMovie.id },
         })
       }
@@ -175,9 +178,9 @@ export default {
   },
   computed: {
     nextMovie() {
-      return this.$store.state.store.movieList[
-        this.$store.state.store.movieList.findIndex(
-          (movie) => movie.id == this.movie.id
+      return this.$store.state.store.movieAndShowList[
+        this.$store.state.store.movieAndShowList.findIndex(
+          (movie) => movie.id == this.movie.id && movie.type == this.movie.type
         ) + 1
       ]
     },

@@ -24,7 +24,12 @@ class marvelAPI {
       })
       .then(function (response) {
         // handle success
-        return (data = response.data.data)
+        let tempData = [];
+        response.data.data.forEach( movie => {
+          movie.type = 'movie'
+          tempData.push(movie)
+        })
+        return (data = tempData)
       })
       .catch(function (error) {
         return error
@@ -42,8 +47,9 @@ class marvelAPI {
       .get('https://mcuapi.herokuapp.com/api/v1/movies/' + id)
       .then(function (response) {
         // handle success
-        console.log(response.data)
-        return (data = response.data)
+        let tempData  = response.data
+        tempData.type = 'movie'
+        return (data = tempData)
       })
       .catch(function (error) {
         // handle error
@@ -73,7 +79,12 @@ class marvelAPI {
       })
       .then(function (response) {
         // handle success
-        return (data = response.data.data)
+        let tempData = [];
+        response.data.data.forEach( show => {
+          show.type = 'show'
+          tempData.push(show)
+        })
+        return (data = tempData)
       })
       .catch(function (error) {
         return error
@@ -91,12 +102,12 @@ class marvelAPI {
       .get('https://mcuapi.herokuapp.com/api/v1/tvshows/' + id)
       .then(function (response) {
         // handle success
-        console.log('Show Response');
-        return (data = response.data)
+        let tempData  = response.data
+        tempData.type = 'show'
+        return (data = tempData)
       })
       .catch(function (error) {
         // handle error
-        console.log('Show Error');
         errorCallback(error)
       })
     return data

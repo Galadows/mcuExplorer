@@ -26,10 +26,11 @@ export default {
         'release_date, ASC',
         'title,phase,release_date,cover_url,id,chronology'
       )
-      response.forEach((movie) => {
-        movie.type = 'movie'
-        this.movies.push(movie)
-      })
+      this.movies = response
+      // response.forEach((movie) => {
+      //   movie.type = 'movie'
+      //   this.movies.push(movie)
+      // })
       this.$store.commit('store/setMovieList', this.movies)
     } else {
       this.movies = this.$store.state.store.movieList
@@ -39,10 +40,12 @@ export default {
       null,
       'title,phase,release_date,cover_url,id'
     )
-    response2.forEach((show) => {
-      show.type = 'show'
-      this.shows.push(show)
-    })
+
+    this.shows = response2
+    // response2.forEach((show) => {
+    //   show.type = 'show'
+    //   this.shows.push(show)
+    // })
   },
   data() {
     return {

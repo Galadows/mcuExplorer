@@ -237,16 +237,26 @@ export default {
     return {
       upBannerHover: false,
       downBannerHover: false,
-      search: '',
+      search: this.$store.state.store.currentParams.search,
       moment: moment,
-      phase: 0,
+      phase: this.$store.state.store.currentParams.phase,
       scrollOffset: 0,
-      chronologicalOrder: false,
-      displayMovies: true,
-      displayShows: false,
+      chronologicalOrder: this.$store.state.store.currentParams.chronologicalOrder,
+      displayMovies: this.$store.state.store.currentParams.displayMovies,
+      displayShows: this.$store.state.store.currentParams.displayShows,
     }
   },
   methods: {
+    saveParams(chronologicalOrder, displayMovies, displayShows, phase, search) {
+      let params = {
+        chronologicalOrder: chronologicalOrder,
+        displayMovies: displayMovies,
+        displayShows: displayShows,
+        phase: phase,
+        search: search,
+      }
+      this.$store.commit('store/saveCurrentParams', params)
+    },
     unselect() {
       this.$event('unselect')
     },
@@ -307,6 +317,13 @@ export default {
       else this.movies.sort(this.sortByReleaseDate)
       let newMovieList = this.filterTypes(
         this.phaseFilter(this.searchFilter(this.movies))
+      )
+      this.saveParams(
+        this.chronologicalOrder,
+        this.displayMovies,
+        this.displayShows,
+        this.phase,
+        this.search
       )
       this.$store.commit('store/setMovieAndShowList', newMovieList)
       return newMovieList
