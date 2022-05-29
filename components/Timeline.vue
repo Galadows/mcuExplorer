@@ -103,7 +103,7 @@
             }"
           >
             <div
-              :id="movie.id"
+              :id="movie.type+'-'+movie.id"
               class="flex flex-col tall:landscape:absolute landscape:static absolute justify-center items-center w-56 text-center"
               :class="{
                 'md:top-[-25rem] -top-72': index % 2 == 0,

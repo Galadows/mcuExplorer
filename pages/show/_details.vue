@@ -47,7 +47,7 @@
             path: '/' + previousMovie.type + '/' + previousMovie.title.replaceAll(' ', '_'),
             query: { id: previousMovie.id },
           }"
-          ><fa icon="arrow-left" class="mr-1" /> Previous show</NuxtLink
+          ><fa icon="arrow-left" class="mr-1" /> Previous</NuxtLink
         >
         <NuxtLink
           to="/#timeline"
@@ -61,7 +61,7 @@
             path:'/' + nextMovie.type + '/' + nextMovie.title.replaceAll(' ', '_'),
             query: { id: nextMovie.id },
           }"
-          >Next show <fa icon="arrow-right" class="mr-1"
+          >Next<fa icon="arrow-right" class="mr-1"
         /></NuxtLink>
       </div>
     </div>

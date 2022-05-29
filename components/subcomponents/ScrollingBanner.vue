@@ -23,7 +23,7 @@
             isHovered = null
           }
         "
-        @click="$emit('imageClicked', image.id)"
+        @click="$emit('imageClicked', image.type + '-' + image.id)"
         class="w-[172.77px] h-[256px] mx-10 animate-fade-in"
       >
         <h1

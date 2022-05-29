@@ -49,10 +49,14 @@
           v-if="previousMovie"
           class="font-extrabold italicml-2 mb-2 absolute left-[5%]"
           :to="{
-            path: '/' + previousMovie.type + '/' + previousMovie.title.replaceAll(' ', '_'),
+            path:
+              '/' +
+              previousMovie.type +
+              '/' +
+              previousMovie.title.replaceAll(' ', '_'),
             query: { id: previousMovie.id },
           }"
-          ><fa icon="arrow-left" class="mr-1" /> Previous movie</NuxtLink
+          ><fa icon="arrow-left" class="mr-1" /> Previous</NuxtLink
         >
         <NuxtLink
           to="/#timeline"
@@ -63,10 +67,11 @@
           v-if="nextMovie"
           class="font-extrabold italicml-2 mb-2 absolute right-[5%]"
           :to="{
-            path:'/' + nextMovie.type + '/' + nextMovie.title.replaceAll(' ', '_'),
+            path:
+              '/' + nextMovie.type + '/' + nextMovie.title.replaceAll(' ', '_'),
             query: { id: nextMovie.id },
           }"
-          >Next movie <fa icon="arrow-right" class="mr-1"
+          >Next<fa icon="arrow-right" class="mr-1"
         /></NuxtLink>
       </div>
     </div>
@@ -163,14 +168,19 @@ export default {
       if (event.key == 'ArrowRight' && this.nextMovie) {
         window.removeEventListener('keyup', this.handleKeyUp)
         this.$router.push({
-          path:'/' + nextMovie.type + '/' + nextMovie.title.replaceAll(' ', '_'),
+          path:
+            '/' + nextMovie.type + '/' + nextMovie.title.replaceAll(' ', '_'),
           query: { id: this.nextMovie.id },
         })
       }
       if (event.key == 'ArrowLeft' && this.previousMovie) {
         window.removeEventListener('keyup', this.handleKeyUp)
         this.$router.push({
-          path: '/' + previousMovie.type + '/' + previousMovie.title.replaceAll(' ', '_'),
+          path:
+            '/' +
+            previousMovie.type +
+            '/' +
+            previousMovie.title.replaceAll(' ', '_'),
           query: { id: this.previousMovie.id },
         })
       }
