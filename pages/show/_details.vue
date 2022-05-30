@@ -1,7 +1,7 @@
 <template>
   <div class="flex lg:flex-row flex-col md:h-screen w-screen bg-black">
     <div
-      class="flex flex-col items-center lg:w-96 w-screen min-h-fit bg-marvel-red text-white"
+      class="flex flex-col items-center lg:w-96 w-screen h-screen min-h-fit bg-marvel-red text-white"
     >
       <div
         class="flex lg:flex-col md:flex-row flex-col flex-1 text-center font-bold"
@@ -10,7 +10,7 @@
           v-if="show.cover_url"
           :src="show.cover_url"
           :alt="show.title + ' cover'"
-          class="tall:p-5 p-12 max-w-full"
+           class="tall:p-5 py-2 px-12 max-w-full"
         />
         <div
           v-else

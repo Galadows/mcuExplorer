@@ -7,14 +7,18 @@ export default {
     },
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {
+        name: 'viewport',
+        content:
+          'apple-mobile-web-app-capable, minimal-ui, width=device-width, initial-scale=1',
+      },
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/MCU.ico' }],
   },
   server: {
-    host: '0.0.0.0' // default: localhost
+    host: '0.0.0.0', // default: localhost
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -30,20 +34,35 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/fontawesome'
+    '@nuxtjs/fontawesome',
+    '@nuxtjs/pwa',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/tailwindcss'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/pwa'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
-  fontawesome:{
+  fontawesome: {
     component: 'fa',
     icons: {
       solid: true,
-      brands: true
-    }
-  }
+      brands: true,
+    },
+  },
+
+  pwa: {
+    workbox: {
+      runtimeCaching: [
+        {
+          urlPattern:
+            'https://raw.githubusercontent.com/AugustoMarcelo/mcuapi/*',
+          handler: 'cacheFirst',
+          method: 'GET',
+          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+        },
+      ],
+    },
+  },
 }
