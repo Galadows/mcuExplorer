@@ -1,20 +1,20 @@
 <template>
   <div class="flex lg:flex-row flex-col md:h-screen w-screen bg-black">
     <div
-      class="flex flex-col items-center lg:w-96 w-screen h-screen min-h-fit bg-marvel-red text-white"
+      class="relative flex flex-col items-center lg:w-96 w-screen h-screen min-h-fit bg-marvel-red text-white"
     >
       <div
-        class="flex lg:flex-col md:flex-row flex-col flex-1 text-center font-bold"
+        class="flex lg:flex-col md:flex-row flex-col flex-1 text-center font-bold max-h-full p-10"
       >
         <img
           v-if="show.cover_url"
           :src="show.cover_url"
           :alt="show.title + ' cover'"
-           class="tall:p-5 py-2 px-12 max-w-full"
+          class="tall:p-5 py-2 px-12 md:w-full md:max-w-[500px] max-w-full"
         />
         <div
           v-else
-          class="bg-black m-5 w-[14rem] h-[20rem] flex flex-1 justify-center"
+          class="bg-black m-5 w-[14rem] h-[20rem] flex justify-center"
         >
           No cover yet
         </div>
@@ -39,12 +39,16 @@
         </div>
       </div>
 
-      <div class="relative w-full h-10 p-2 m-5 mb-0 text-white">
+      <div class="absolute bottom-0 left-0 w-full h-10 p-2 mb-0 text-white">
         <NuxtLink
           v-if="previousMovie"
           class="font-extrabold italicml-2 mb-2 absolute left-[5%]"
           :to="{
-            path: '/' + previousMovie.type + '/' + previousMovie.title.replaceAll(' ', '_'),
+            path:
+              '/' +
+              previousMovie.type +
+              '/' +
+              previousMovie.title.replaceAll(' ', '_'),
             query: { id: previousMovie.id },
           }"
           ><fa icon="arrow-left" class="mr-1" /> Previous</NuxtLink
@@ -58,7 +62,8 @@
           v-if="nextMovie"
           class="font-extrabold italicml-2 mb-2 absolute right-[5%]"
           :to="{
-            path:'/' + nextMovie.type + '/' + nextMovie.title.replaceAll(' ', '_'),
+            path:
+              '/' + nextMovie.type + '/' + nextMovie.title.replaceAll(' ', '_'),
             query: { id: nextMovie.id },
           }"
           >Next<fa icon="arrow-right" class="mr-1"
@@ -76,7 +81,7 @@
         </div>
         <div class="xl:w-fit xl:h-fit">
           <div
-            class="lg:w-[560px] lg:h-[315px] 2xl:m-0 mt-10 w-full 2xl:relative 2xl:top-0"
+            class="lg:w-[560px] 2xl:m-0 mt-10 w-full 2xl:relative 2xl:top-0"
             v-if="show.trailer_url"
           >
             <iframe
@@ -133,6 +138,7 @@ export default {
     return { show }
   },
   mounted() {
+    console.log('Show Details:',this.show)
     if (this.$store.state.store.movieList.length == 0) {
       this.$store.dispatch('store/getMovieList')
     }
@@ -158,14 +164,19 @@ export default {
       if (event.key == 'ArrowRight' && this.nextMovie) {
         window.removeEventListener('keyup', this.handleKeyUp)
         this.$router.push({
-          path:'/' + nextMovie.type + '/' + nextMovie.title.replaceAll(' ', '_'),
+          path:
+            '/' + nextMovie.type + '/' + nextMovie.title.replaceAll(' ', '_'),
           query: { id: this.nextMovie.id },
         })
       }
       if (event.key == 'ArrowLeft' && this.previousMovie) {
         window.removeEventListener('keyup', this.handleKeyUp)
         this.$router.push({
-          path: '/' + previousMovie.type + '/' + previousMovie.title.replaceAll(' ', '_'),
+          path:
+            '/' +
+            previousMovie.type +
+            '/' +
+            previousMovie.title.replaceAll(' ', '_'),
           query: { id: this.previousMovie.id },
         })
       }

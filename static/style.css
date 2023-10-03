@@ -31,6 +31,27 @@ body::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
+      /* Custom scrollbar */
+
+/* width */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 5px;
+}
+
+/* Track */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: black;
+}
+
+/* Handle */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #ED1D24;
+}
+
+/* Handle on hover */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  /*background: #555;*/
+}
 
 body {
   overflow-y: scroll;

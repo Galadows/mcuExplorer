@@ -32,8 +32,7 @@ export default {
   props: ['trueOption', 'falseOption', 'value', 'tickable', 'label'],
   methods: {
     toggleValue() {
-      this.value = !this.value
-      this.$emit('input', this.value)
+      this.$emit('input', !this.value)
     },
   },
 }

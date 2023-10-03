@@ -1,10 +1,10 @@
 <template>
   <div class="flex lg:flex-row flex-col md:h-screen w-screen bg-black">
     <div
-      class="flex flex-col items-center lg:w-96 h-screen w-screen min-h-fit bg-marvel-red text-white"
+      class="flex flex-col items-center lg:w-96 w-screen h-screen min-h-fit bg-marvel-red text-white"
     >
       <div
-        class="flex lg:flex-col md:flex-row flex-col flex-1 text-center font-bold"
+        class="flex lg:flex-col md:flex-row flex-col flex-1 text-center font-bold max-h-full p-10"
       >
         <img
           v-if="movie.cover_url"
@@ -86,7 +86,7 @@
         </div>
         <div class="xl:w-fit xl:h-fit">
           <div
-            class="lg:w-[560px] lg:h-[315px] 2xl:m-0 mt-10 w-full 2xl:relative 2xl:top-0"
+            class="lg:w-[560px] lg:h-[315px] 2xl:m-0 mt-10 w-full 2xl:relative 2xl:top-0 overflow-hidden"
             v-if="movie.trailer_url"
           >
             <iframe
@@ -135,6 +135,7 @@ export default {
       title = context.params.details.toString().split('_').join(' ')
     }
     const movie = await marvelAPI.getMovie(context.query.id, context.error)
+
     if (movie && movie.title != title) {
       context.redirect(
         '/movie/' + movie.title.split(' ').join('_') + '?id=' + movie.id
@@ -143,6 +144,7 @@ export default {
     return { movie }
   },
   mounted() {
+    console.log('Movie Details:',this.movie)
     if (this.$store.state.store.movieList.length == 0) {
       this.$store.dispatch('store/getMovieList')
     }

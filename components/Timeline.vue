@@ -2,7 +2,7 @@
   <div
     id="timeline"
     ref="timeline"
-    class="flex bg-black h-screen w-screen overflow-x-scroll overflow-y-hidden scrollbar-hidden scroll-smooth select-none"
+    class="flex bg-black h-screen w-screen overflow-x-scroll overflow-y-hidden custom-scrollbar scroll-smooth select-none"
   >
     <div class="flex flex-row justify-center items-center relative">
       <div
@@ -35,6 +35,7 @@
             { label: 'Phase 2', value: 2 },
             { label: 'Phase 3', value: 3 },
             { label: 'Phase 4', value: 4 },
+            { label: 'Phase 5', value: 5 },
           ]"
           v-model="phase"
         />
@@ -84,11 +85,12 @@
           :class="{
             'bg-marvel-red':
               moment(movie.release_date).isBefore(new Date()) ||
-              chronologicalOrder,
+              !chronologicalOrder,
             'bg-blue-900':
               (moment(movie.release_date).isAfter(new Date()) ||
                 !movie.release_date) &&
               !chronologicalOrder,
+              'bg-white': chronologicalOrder,
           }"
         >
           <div
@@ -162,7 +164,7 @@
                   path:
                     movie.type == 'movie'
                       ? 'movie/' + movie.title.replaceAll(' ', '_')
-                      : 'show/' + movie.title.replaceAll(' ', '_'),
+                      : 'show/' + movie.title.replaceAll(' ', '_').replaceAll('.',''),
                   query: { id: movie.id },
                 }"
               >
@@ -186,10 +188,10 @@
           <template
             v-if="
               filteredMovies[index + 1] &&
-              moment(movie.release_date).isBefore(new Date()) &&
+              moment(movie.release_date).isBefore(new Date()) && (
               moment(filteredMovies[index + 1].release_date).isAfter(
                 new Date()
-              ) &&
+              )|| filteredMovies[index + 1].release_date == undefined) &&
               !chronologicalOrder
             "
           >
@@ -274,6 +276,9 @@ export default {
       return this.movies.filter((movie) =>
         movie.title.toLowerCase().includes(this.search.toLowerCase())
       )
+    },
+    chronologyFilter(movies) {
+        return movies.filter((movie) => movie.chronology == this.phase)
     },
     sortByChronology(a, b) {
       if (a.chronology === null) {

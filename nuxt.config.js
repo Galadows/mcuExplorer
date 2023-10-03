@@ -18,7 +18,7 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/MCU.ico' }],
   },
   server: {
-    host: '0.0.0.0', // default: localhost
+    host: '192.168.1.74', // default: localhost
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
