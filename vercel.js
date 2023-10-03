@@ -4,9 +4,6 @@ export default {
     {
       "src": "nuxt.config.js",
       "use": "@nuxtjs/vercel-builder",
-      "config": {
-        "serverFiles": ["package.json"]
-      }
     }
   ]
 }
