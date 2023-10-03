@@ -5,5 +5,11 @@ export default {
       "src": "nuxt.config.js",
       "use": "@nuxtjs/vercel-builder",
     }
+  ],
+  "routes":[
+    {
+      "src": "/",
+      "dest": "/"
+    }
   ]
 }
