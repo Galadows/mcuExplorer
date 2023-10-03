@@ -1,15 +1,1 @@
-export default {
-  "version": 2,
-  "builds": [
-    {
-      "src": "nuxt.config.js",
-      "use": "@nuxtjs/vercel-builder",
-    }
-  ],
-  "routes":[
-    {
-      "src": "/",
-      "dest": "/"
-    }
-  ]
-}
+{ "rewrites": [{ "source": "/(.*)", "destination": "/" }] }
