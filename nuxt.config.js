@@ -1,4 +1,4 @@
-export default defineNuxtConfig({
+export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'mcuExplorer',
@@ -18,7 +18,7 @@ export default defineNuxtConfig({
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/MCU.ico' }],
   },
   server: {
-    host: '192.168.1.74', // default: localhost
+    host: 'localhost', // default: 192.168.1.74
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -65,5 +65,4 @@ export default defineNuxtConfig({
       ],
     },
   },
-})
-
+}
