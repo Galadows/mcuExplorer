@@ -1,4 +1,4 @@
-export default {
+export default defineNuxtConfig({
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'mcuExplorer',
@@ -65,4 +65,5 @@ export default {
       ],
     },
   },
-}
+})
+

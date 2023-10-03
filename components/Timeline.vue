@@ -124,7 +124,7 @@
                 <img
                   :src="movie.cover_url"
                   :alt="movie.title + ' cover'"
-                  class="md:h-64 h-40 m-5 border border-marvel-red"
+                  class="md:h-64 h-40 m-5 border"
                   :class="{
                     'border-marvel-red': moment(movie.release_date).isBefore(
                       new Date()
@@ -170,7 +170,7 @@
                 <img
                   :src="movie.cover_url"
                   :alt="movie.title + ' cover'"
-                  class="md:h-64 h-40 m-5 border border-marvel-red"
+                  class="md:h-64 h-40 m-5 border"
                   :class="{
                     'border-marvel-red': moment(movie.release_date).isBefore(
                       new Date()
