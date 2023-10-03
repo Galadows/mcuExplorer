@@ -80,17 +80,16 @@
         <div
           class="h-1 md:w-96 w-72 flex items-center"
           v-for="(movie, index) in filteredMovies"
-          :key="movie.title + '-Timeline'"
+          :key="movie.type == 'movie' ? movie.title + '-Timeline' : movie.title + '-s' + movie.season + '-Timeline'"
           @mouseenter="movie.id == selected ? $emit('unselect') : null"
           :class="{
             'bg-marvel-red':
               moment(movie.release_date).isBefore(new Date()) ||
-              !chronologicalOrder,
+              chronologicalOrder,
             'bg-blue-900':
               (moment(movie.release_date).isAfter(new Date()) ||
                 !movie.release_date) &&
-              !chronologicalOrder,
-              'bg-white': chronologicalOrder,
+              !chronologicalOrder
           }"
         >
           <div

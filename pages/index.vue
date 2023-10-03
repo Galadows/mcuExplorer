@@ -38,7 +38,7 @@ export default {
 
     let response2 = await marvelAPI.getShows(
       null,
-      'title,phase,release_date,cover_url,id'
+      'title,phase,release_date,cover_url,id, season'
     )
 
     this.shows = response2
